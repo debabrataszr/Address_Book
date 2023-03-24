@@ -32,8 +32,10 @@ public class AddressBookMain {
                         System.out.println("Entered key address book not available");
                     break;
                 case exit:
+                    ab.toQuit();
                     loop = false;
                     break;
+
                 default:
                     System.out.println("Entered Incorrect input");
             }

@@ -1,3 +1,6 @@
+import java.util.Objects;
+import java.util.stream.DoubleStream;
+
 public class Contacts {
     String firstname;
     String lastname;
@@ -70,5 +73,23 @@ public class Contacts {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Contacts contact = (Contacts) o;
+        return firstname.equals(contact.firstname) && lastname.equals(contact.lastname);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstname);
+    }
+
+    @Override
+    public String toString() {
+        return "Contact{" + firstname + " " + lastname + " " + address + " " + city + " " + state + " " + zip + " " + phoneno + " " + email + '}';
     }
 }
