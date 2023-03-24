@@ -120,7 +120,7 @@ public class AddressBook {
             System.out.println(arr[i].getFirstname() + " " + arr[i].getLastname() + " " + arr[i].getAddress() + " "
                     + arr[i].getState() + " " + arr[i].getZip() + " " + arr[i].getPhoneno() + " " + arr[i].getEmail());
         }
-         System.out.println("Contact edited successfully");
+         System.out.println("Contact deleted successfully");
     }
 
     public static void quit() {
