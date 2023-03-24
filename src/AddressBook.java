@@ -1,81 +1,77 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
+    ArrayList<Contacts> contact = new ArrayList<>();
+    private int noOfContacts;
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
-        askUser();
-    }
-
-    public static void askUser() {
-        System.out.println("Select an option..");
-        System.out.println("1. Add a person");
-        System.out.println("2. Edit");
-        System.out.println("3. Quit");
-
-        int choice = sc.nextInt();
-        switch (choice) {
-            case 1:
-                addAPerson();
-                System.out.println("\n");
-                askUser();
-                break;
-            case 2:
-                edit();
-                System.out.println("\n");
-                askUser();
-                break;
-            default:
-                break;
+        System.out.println("Enter number of persons : ");
+        int persons = sc.nextInt();
+        Contacts[] arr = new Contacts[persons];
+        int result = 0;
+        while (result != 4) {
+            System.out.println("What do you want to perform");
+            System.out.println("1.Add \t2.Edit \t3.Delete  \t4.Quit");
+            result = sc.nextInt();
+            switch (result) {
+                case 1:
+                    add(persons, arr);
+                    break;
+                case 2:
+                    edit(persons, arr);
+                    break;
+                case 3:
+                    delete(persons, arr);
+                    break;
+                case 4:
+                    quit();
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
-    public static void addAPerson() {
-        System.out.println("Firstname : ");
-        String firstname = sc.next();
-        System.out.println("Lastname : ");
-        String lastname = sc.next();
-        System.out.println("Address : ");
-        String address = sc.next();
-        System.out.println("City : ");
-        String city = sc.next();
-        System.out.println("State : ");
-        String state = sc.next();
-        System.out.println("Zipcode : ");
-        int zip = sc.nextInt();
-        System.out.println("Phone No. : ");
-        long phoneno = sc.nextLong();
-        System.out.println("Email : ");
-        String email = sc.next();
+    public static void add(int person, Contacts[] array) {
 
-        Contacts contact = new Contacts();
-        contact.firstname = firstname;
-        contact.lastname = lastname;
-        contact.address = address;
-        contact.city = city;
-        contact.state = state;
-        contact.zip = zip;
-        contact.phoneno = phoneno;
-        contact.email = email;
+        for (int i = 0; i < person; i++) {
+            Contacts contact = new Contacts();
+            System.out.println("enter " + (i + 1) + " person name-");
+            contact.setFirstname(sc.next());
+            System.out.println("enter " + (i + 1) + " person lastname-");
+            contact.setLastname(sc.next());
+            System.out.println("enter " + (i + 1) + " person address-");
+            contact.setAddress(sc.next());
+            System.out.println("enter " + (i + 1) + " person city-");
+            contact.setCity(sc.next());
+            System.out.println("enter " + (i + 1) + " person state-");
+            contact.setState(sc.next());
+            System.out.println("enter " + (i + 1) + " person zip code-");
+            contact.setZip(sc.nextInt());
+            System.out.println("enter " + (i + 1) + " person phone no.-");
+            contact.setPhoneno(sc.nextLong());
+            System.out.println("enter " + (i + 1) + " person email-");
+            contact.setEmail(sc.next());
+            array[i] = contact;
+        }
     }
 
-    public static void edit() {
+    public static void edit(int persons, Contacts[] array) {
         System.out.println("What do you want to edit?");
-        System.out.println("1. First name ");
-        System.out.println("2. Last name ");
-        System.out.println("3. Address ");
-        System.out.println("4. City ");
-        System.out.println("5. State ");
-        System.out.println("6. Zip ");
-        System.out.println("7. Phone No. ");
-        System.out.println("8. Email ");
+        System.out.println("1. First name " + "2. Last name " + "3. Address " + "4. City " + "5. State " + "6. Zip " +
+                "7. Phone No. " + "8. Email ");
+
         int choice = sc.nextInt();
         switch (choice) {
             case 1:
+
                 System.out.println("Firstname : ");
                 String firstname = sc.next();
                 break;
+
             case 2:
                 System.out.println("Lastname : ");
                 String lastname = sc.next();
@@ -105,6 +101,30 @@ public class AddressBook {
                 String email = sc.next();
                 break;
         }
+
         System.out.println("Contact edited successfully");
+    }
+
+    public static void delete(int persons, Contacts[] arr) {
+        System.out.println("Enter the firstname you want to delete : ");
+        String del = sc.next();
+        System.out.println("Address book is now for : " + (persons - 1) + " person");
+        for (int i = 0; i < persons; i++) {
+            if (del.equals(arr[i].getFirstname())) {
+                for (int j = i; j < persons - 1; j++) {
+                    arr[j] = arr[j + 1];
+                }
+            }
+        }
+        for (int i = 0; i < persons - 1; i++) {
+            System.out.println(arr[i].getFirstname() + " " + arr[i].getLastname() + " " + arr[i].getAddress() + " "
+                    + arr[i].getState() + " " + arr[i].getZip() + " " + arr[i].getPhoneno() + " " + arr[i].getEmail());
+        }
+
+    }
+
+
+    public static void quit() {
+        System.out.println("***** The End *****");
     }
 }
