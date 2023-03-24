@@ -40,20 +40,20 @@ public class Contacts {
         this.city = city;
     }
 
-    public String getState() {
-        return state;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
     public int getZip() {
         return zip;
     }
 
     public void setZip(int zip) {
         this.zip = zip;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
     }
 
     public long getPhoneno() {
@@ -70,18 +70,5 @@ public class Contacts {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-    @Override
-    public String toString() {
-        return "Contacts{" +
-                "firstname='" + firstname + '\'' +
-                ", lastname='" + lastname + '\'' +
-                ", address='" + address + '\'' +
-                ", city='" + city + '\'' +
-                ", state='" + state + '\'' +
-                ", zip=" + zip +
-                ", phoneno=" + phoneno +
-                ", email='" + email + '\'' +
-                '}';
     }
 }
