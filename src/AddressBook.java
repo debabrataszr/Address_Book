@@ -35,9 +35,9 @@ public class AddressBook {
         }
     }
 
-    public static void add(int person, Contacts[] array) {
+    public static void add(int persons, Contacts[] array) {
 
-        for (int i = 0; i < person; i++) {
+        for (int i = 0; i < persons; i++) {
             Contacts contact = new Contacts();
             System.out.println("enter " + (i + 1) + " person name-");
             contact.setFirstname(sc.next());
