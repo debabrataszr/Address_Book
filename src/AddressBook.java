@@ -1,17 +1,13 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class AddressBook {
-    static Scanner sc = new Scanner(System.in);
-    //ArrayList<Contacts> contact = new ArrayList<>();
 
-    public static void main(String[] args) {
-        System.out.println("Welcome to Address Book Program");
-        AddressBook ab = new AddressBook();
-        ArrayList<Contacts> contact = new ArrayList<>();
-        // ArrayList<Contacts> arr = new ArrayList<>();
-        Scanner sc = new Scanner(System.in);
-        ab.addNewContacts(contact);
+    HashMap<String, ArrayList<Contacts>> addressBooks = new HashMap<>();
+    Scanner sc = new Scanner(System.in);
+
+   public void callAddressBook(ArrayList<Contacts> contacts) {
         boolean loop = true;
         while (loop) {
             System.out.println("Enter what you want to perform : " + '\n' + "press 1 for Edit Contact" +
@@ -19,25 +15,32 @@ public class AddressBook {
                     "Enter 4 for delete contact" + '\n' + "Enter 0 to exit");
             final int editContact = 1, printContact = 2, addContact = 3, deleteContact = 4, Quit = 5;
             int choice = sc.nextInt();
-            switch (choice) {
-                case editContact:
-                    ab.editContact(contact);
+            switch (choice){
+            case editContact:
+                if (contacts.isEmpty())
+                    System.out.println("Address book is empty");
+                else {
+                    editContact(contacts);
                     System.out.println("After editing contact");
-                    ab.printContact(contact);
-                    break;
-                case printContact:
-                    ab.printContact(contact);
-                    break;
-                case addContact:
-                    ab.addNewContacts(contact);
-                    System.out.println("After adding contacts");
-                    ab.printContact(contact);
-                    break;
-                case deleteContact:
-                    ab.deleteContact(contact);
-                    break;
-                case Quit:
-                    ab.toQuit();
+                    printContact(contacts);
+                }
+                break;
+            case printContact:
+                if (contacts.isEmpty())
+                    System.out.println("Address book is empty");
+                else
+                    printContact(contacts);
+                break;
+            case addContact:
+                addNewContacts(contacts);
+                System.out.println("After adding contacts");
+                printContact(contacts);
+                break;
+            case deleteContact:
+                if (contacts.isEmpty())
+                    System.out.println("Address book is empty");
+                else
+                    deleteContact(contacts);
                     break;
                 default:
                     loop=false;
