@@ -1,10 +1,7 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
-    ArrayList<Contacts> contact = new ArrayList<>();
-    private int noOfContacts;
 
     public static void main(String[] args) {
         System.out.println("Welcome to Address Book Program");
