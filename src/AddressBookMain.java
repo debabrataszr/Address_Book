@@ -17,41 +17,46 @@ public class AddressBookMain {
             System.out.println("Press 1 to create new address book" + '\n' + "Press 2 to perform operation " +
                     "on existing address book" + '\n' + "Press 3 to search contacts with city " + '\n'
                     + "Press 4 to get person with city" + '\n' + "Press 5 to get number of contacts by city"
-                    + '\n' + "Press 6 to get sorted details by name" + '\n' + "Press 0 to exit");
+                    + '\n' + "Press 6 to get sorted contacts by name/City/State/Zip" + '\n' + "Press 0 to exit");
             final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, getPersonWithCity = 4,
-                    getNoOfContactByCity = 5, sortedDetailsByName = 6, exit = 0;
-            int option = sc.nextInt();
-            switch (option) {
-                case createAddressBook:
-                    abm.createAddressBook();
-                    break;
-                case operateExisting:
-                    System.out.println("Enter key belonging to address book");
-                    String inputKey = sc.next();
-                    if (abm.addressbook.containsKey(inputKey))
-                        ab.callAddressBook(abm.addressbook.get(inputKey));
-                    else
-                        System.out.println("Entered key address book not available");
-                    break;
-                case searchContacts:
-                    abm.searchContactsWithCity();
-                    break;
-                case getPersonWithCity:
-                    abm.getContactByCityAndState();
-                    break;
-                case getNoOfContactByCity:
-                    abm.getNumberOfContacts();
-                    break;
-                case sortedDetailsByName:
-                    abm.getSortedDetailsByName();
-                    break;
-                case exit:
-                    ab.toQuit();
-                    loop = false;
-                    break;
+                    getNoOfContactByCity = 5, sortedDetails = 6, exit = 0;
+            try {
+                int option = sc.nextInt();
+                switch (option) {
+                    case createAddressBook:
+                        abm.createAddressBook();
+                        break;
+                    case operateExisting:
+                        System.out.println("Enter key belonging to address book");
+                        String inputKey = sc.next();
+                        if (abm.addressbook.containsKey(inputKey))
+                            ab.callAddressBook(abm.addressbook.get(inputKey));
+                        else
+                            System.out.println("Entered key address book not available");
+                        break;
+                    case searchContacts:
+                        abm.searchContactsWithCity();
+                        break;
+                    case getPersonWithCity:
+                        abm.getContactByCityAndState();
+                        break;
+                    case getNoOfContactByCity:
+                        abm.getNumberOfContacts();
+                        break;
+                    case sortedDetails:
+                        abm.getSortedDetails();
+                        break;
+                    case exit:
+                        ab.toQuit();
+                        loop = false;
+                        break;
 
-                default:
-                    System.out.println("Entered Incorrect input");
+                    default:
+                        System.out.println("Entered Incorrect input");
+                        break;
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("You entered incorrect input, now enter correct input");
             }
         }
     }
@@ -87,15 +92,63 @@ public class AddressBookMain {
     }
 
     public void getNumberOfContacts() {
-        System.out.println("Please enter city name");
-        String cityName = sc.next();
-        long count = addressbook.values().stream().flatMap(p -> p.stream()).filter(p -> p.getCity().equalsIgnoreCase(cityName)).count();
-        System.out.println("Count of contacts with " + cityName + " are " + count);
+        System.out.println("Please enter choice parameter ");
+        System.out.println("Press 1 for City" + '\n' + "Press 2 for State");
+        final int byCity = 1, byState = 2;
+        try {
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
+            switch (choice) {
+                case byCity:
+                    System.out.println("Please enter city name");
+                    String cityName = input.next();
+                    long countByCity = addressbook.values().stream().flatMap(Collection::stream).filter(p -> p.getCity().equalsIgnoreCase(cityName)).count();
+                    System.out.println("Count of contacts with " + cityName + " are " + countByCity);
+                    break;
+                case byState:
+                    System.out.println("Please enter State name");
+                    String stateName = input.next();
+                    long countByState = addressbook.values().stream().flatMap(Collection::stream).filter(p -> p.getCity().equalsIgnoreCase(stateName)).count();
+                    System.out.println("Count of contacts with " + stateName + " are " + countByState);
+                    break;
+                default:
+                    System.out.println("You entered wrong input");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("You entered wrong input. Please enter valid input");
+        }
+
     }
 
-    public void getSortedDetailsByName() {
-        List<Contacts> nameSortedAddressBook = addressbook.values().stream().flatMap(A -> A.stream())
-                .sorted((Comparator.comparing(Contacts::getFirstname))).collect(Collectors.toList());
-        System.out.println(nameSortedAddressBook);
+    public void getSortedDetails() {
+        System.out.println("Please enter the choice parameter by which you want sort");
+        System.out.println("Press 1 for Name" + '\n' + "Press 2 for City" + '\n' + "Press 3 for State" + '\n' + "Press 4 for ZipCode");
+        final int byName = 1, byCity = 2, byState = 3, byZipCode = 4;
+        try {
+            Scanner input = new Scanner(System.in);
+            int choice = input.nextInt();
+            switch (choice) {
+                case byName:
+                    System.out.println(addressbook.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contacts::getFirstname))).collect(Collectors.toList()));
+                    break;
+                case byCity:
+                    System.out.println(addressbook.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contacts::getCity))).collect(Collectors.toList()));
+                    break;
+                case byState:
+                    System.out.println(addressbook.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contacts::getState))).collect(Collectors.toList()));
+                    break;
+                case byZipCode:
+                    System.out.println(addressbook.values().stream().flatMap(Collection::stream)
+                            .sorted((Comparator.comparing(Contacts::getZip))).collect(Collectors.toList()));
+                    break;
+                default:
+                    System.out.println("You entered wrong input");
+            }
+        } catch (InputMismatchException e) {
+            System.out.println("You entered wrong input. Please enter valid input");
+        }
     }
 }
