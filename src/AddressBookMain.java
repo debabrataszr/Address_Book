@@ -17,9 +17,9 @@ public class AddressBookMain {
             System.out.println("Press 1 to create new address book" + '\n' + "Press 2 to perform operation " +
                     "on existing address book" + '\n' + "Press 3 to search contacts with city " + '\n'
                     + "Press 4 to get person with city" + '\n' + "Press 5 to get number of contacts by city"
-                    +'\n'+"Press 0 to exit");
+                    + '\n' + "Press 6 to get sorted details by name" + '\n' + "Press 0 to exit");
             final int createAddressBook = 1, operateExisting = 2, searchContacts = 3, getPersonWithCity = 4,
-                    getNoOfContactByCity = 5, exit = 0;
+                    getNoOfContactByCity = 5, sortedDetailsByName = 6, exit = 0;
             int option = sc.nextInt();
             switch (option) {
                 case createAddressBook:
@@ -41,6 +41,9 @@ public class AddressBookMain {
                     break;
                 case getNoOfContactByCity:
                     abm.getNumberOfContacts();
+                    break;
+                case sortedDetailsByName:
+                    abm.getSortedDetailsByName();
                     break;
                 case exit:
                     ab.toQuit();
@@ -88,5 +91,11 @@ public class AddressBookMain {
         String cityName = sc.next();
         long count = addressbook.values().stream().flatMap(p -> p.stream()).filter(p -> p.getCity().equalsIgnoreCase(cityName)).count();
         System.out.println("Count of contacts with " + cityName + " are " + count);
+    }
+
+    public void getSortedDetailsByName() {
+        List<Contacts> nameSortedAddressBook = addressbook.values().stream().flatMap(A -> A.stream())
+                .sorted((Comparator.comparing(Contacts::getFirstname))).collect(Collectors.toList());
+        System.out.println(nameSortedAddressBook);
     }
 }
